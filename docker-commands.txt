@@ -1,0 +1,25 @@
+# FOR PULLING THE HELLO-WORLD IMAGE
+docker pull hello-world
+
+#FOR RUNNING THE HELLO-WORLD IMAGE
+docker run hello-world
+
+#FOR RUNNING UBUNTU 
+docker run -it ubuntu
+
+exit
+
+#CREATING A NETWORK
+docker network create mongo-network
+
+#RUNNING THE MONGO IMAGE ON PORT 27017:27017 ON THE NETWORD mongo-network USING THE USERNAME admin AND PASSWORD admin_mongo
+docker run -d -p 27017:27017 --name mongo --network mongo-network -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin-mongo
+
+#INSPECTING THE NETWORK CREATED
+docker network inspect mongo-network
+
+#RUNNING EXPRESS ON PORT 8081:8081 ON THE NETWORK mongo-network USING THE USERNAME admin AND PASSWORD admin ON THE MONGO URL AS mongodb://admin:admin@mongo:27017
+docker run -d -p 8081:8081 --name mongo_express --network mongo-network -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=admin -e ME_CONFIG_MONGODB_URL="mongodb://admin:admin@mongo:27017" mongo-express
+
+docker network inspect mongo-network
+
